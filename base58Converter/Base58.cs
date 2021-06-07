@@ -21,27 +21,42 @@ namespace RazorSharp.Converters
 
 				Decode();
 
-				_byteArray = _number.ToByteArray();
+				_byteArray = _BE_number.ToByteArray();
 
-				foreach (char sy in _base58String)
-					if (sy == '1' && _base58String.Length > 1 && _byteArray.Length < _base58String.Length)
-						_byteArray = new byte[1].Concat(_byteArray).ToArray();
-					else
-						break;
+				if (_BE_number.CompareTo(BigInteger.Zero) < 0)
+					_BE_number = new BigInteger(1, _byteArray);
 
+				ArrayZeroPad();
+
+				_LE_number = new BigInteger(_byteArray.Reverse().ToArray());
 			}
 		}
 
-		private static BigInteger _number;
-		public static BigInteger Number 
+		private static BigInteger _BE_number;
+		public static BigInteger BE_Number 
 		{ 
-			get => _number; 
+			get => _BE_number; 
 			set
 			{
-				_number = value;
-				_byteArray = _number.ToByteArray();
+				_BE_number = value;
+				_byteArray = _BE_number.ToByteArray();
+				_LE_number = new BigInteger(_byteArray.Reverse().ToArray());
 				_base58String = string.Empty;
-				Encode(_number);
+				Encode(_BE_number);
+			}
+		}
+
+		private static BigInteger _LE_number;
+		public static BigInteger LE_Number
+		{
+			get => _LE_number;
+			set
+			{
+				_LE_number = value;
+				_byteArray = _LE_number.ToByteArray().Reverse().ToArray();
+				_BE_number = new BigInteger(_byteArray);
+				_base58String = string.Empty;
+				Encode(_BE_number);
 			}
 		}
 
@@ -55,31 +70,48 @@ namespace RazorSharp.Converters
 				if (value is null)
 					throw new ArgumentNullException();
 				_byteArray = value;
-				_number = new BigInteger(_byteArray);
+				_BE_number = new BigInteger(_byteArray);
+				_LE_number = new BigInteger(_byteArray.Reverse().ToArray());
 				_base58String = string.Empty;
-				Encode(_number);
-				foreach (byte by in _byteArray)
-					if (by == 0 && _byteArray.Length > 1)
-						if (_number.IntValue == 0 && (_base58String.Length == _byteArray.Length))
-							break;
-						else
-							_base58String = _base58String.Insert(0, "1");
-					else
-						break;
+				Encode(_BE_number);
 			} 
 		}
 
-		static void Encode(BigInteger source)
+		private static void Encode(BigInteger source)
 		{
 			_base58String = _base58String.Insert(0, _base58Charset[source.Mod(new BigInteger("58")).IntValue].ToString());
 			if (source.Divide(new BigInteger("58")) is BigInteger next && next.IntValue != 0)
 				Encode(next);
+			else
+				Base58ZeroPad();
 		}
 
-		static void Decode() => _number = Base58String
+		private static void Decode() => _BE_number = Base58String
 											.Reverse()
 											.Select((val, dex) => new Tuple<char, int>(val, dex))
-											.Aggregate(new BigInteger(new byte[1]), (agg, base58tuple) =>
+											.Aggregate(BigInteger.Zero, (agg, base58tuple) =>
 												  agg.Add(new BigInteger(_base58Charset.IndexOf(base58tuple.Item1).ToString()).Multiply(new BigInteger("58").Pow(base58tuple.Item2))));
+		private static void Base58ZeroPad()
+		{
+			foreach (byte by in _byteArray)
+				if (by == 0 && _byteArray.Length > 1)
+					if (_BE_number.IntValue == 0 && (_base58String.Length == _byteArray.Length))
+						break;
+					else
+						_base58String = _base58String.Insert(0, "1");
+				else
+					break;
+		}
+
+		private static void ArrayZeroPad()
+		{
+			foreach (char sy in _base58String)
+					if (sy == '1' && _base58String.Length > 1 && _byteArray.Length < _base58String.Length)
+						_byteArray = new byte[1].Concat(_byteArray).ToArray();
+					else
+						break;
+		}
+
+		public static void PrintOut() => Console.WriteLine($"Bytes: {BitConverter.ToString(ByteArray)}\nBE: {BE_Number}\nLE: {LE_Number}\nBase58: {Base58String}");
 	}
 }

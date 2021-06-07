@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Org.BouncyCastle.Math;
 using RazorSharp.Converters;
 using System;
 
