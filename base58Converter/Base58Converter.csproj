@@ -17,10 +17,18 @@
 	<PackageTags>base58 ergo bitcoin</PackageTags>
 	<RepositoryUrl>https://github.com/Razor-Sharp-Solutions/base58Converter</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
+	<PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Portable.BouncyCastle" Version="1.8.10" />
+    <None Include="icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BouncyCastle.NetCore" Version="1.8.8" />
   </ItemGroup>
 
 </Project>
