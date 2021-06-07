@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Converters", "base58Converter\Converters.csproj", "{23F58678-4FA6-4758-9C57-D8EA1AA15FAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Base58Converter", "base58Converter\Base58Converter.csproj", "{23F58678-4FA6-4758-9C57-D8EA1AA15FAB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{0A9A67BF-3A4B-4202-855D-55BBEEACC81E}"
 EndProject

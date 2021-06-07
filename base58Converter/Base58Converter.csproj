@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>RazorSharp.Converters</RootNamespace>
+	<PackageId>Base58Converter</PackageId>
+	<Version>1.0.1</Version>
+	<Authors>Razor-sharp_Solutions</Authors>
+	<Company>Razor-sharp Solutions</Company>
+	<Title>Base58Converter</Title>
+	<PackageDescription>A simple converter to and from base58.</PackageDescription>
+	<projectUrl>https://github.com/Razor-Sharp-Solutions/base58Converter</projectUrl>
+	<Description>A simple converter to and from base58. Setting any of the properties (ByteArray, Number or Base58String) will automatically do the conversion and change the rest of the properties. Examples on the github page.</Description>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageProjectUrl>https://github.com/Razor-Sharp-Solutions/base58Converter</PackageProjectUrl>
+	<PackageTags>base58 ergo bitcoin</PackageTags>
+	<RepositoryUrl>https://github.com/Razor-Sharp-Solutions/base58Converter</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Portable.BouncyCastle" Version="1.8.10" />
+  </ItemGroup>
+
+</Project>

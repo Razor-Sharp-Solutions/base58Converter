@@ -16,6 +16,7 @@ namespace RazorSharp.Converters
 			get => _base58String; 
 			set
 			{
+				value.ToList().ForEach(ch => { if (!_base58Charset.Contains(ch)) throw new ArgumentException($"Character {ch} is not a valid base58 symbol!"); });
 				_base58String = value;
 
 				Decode();

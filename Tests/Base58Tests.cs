@@ -14,6 +14,14 @@ namespace Tests
 			Assert.Throws<ArgumentNullException>(() => Base58Converter.Base58String = null);
 		}
 
+		[Test]
+		public void Base58BadSymbol()
+		{
+			Assert.Throws<ArgumentException>(() => Base58Converter.Base58String = "abc0");
+			Assert.Throws<ArgumentException>(() => Base58Converter.Base58String = "stesteO");
+			Assert.Throws<ArgumentException>(() => Base58Converter.Base58String = "zzzIzzz");
+		}
+
 		[TestCase (new byte[]{ 0 }, ExpectedResult = "1")]
 		[TestCase(new byte[] { 0, 0, 0, 0 }, ExpectedResult = "1111")]
 		[TestCase(new byte[] { 0, 0, 0, 1 }, ExpectedResult = "1112")]
