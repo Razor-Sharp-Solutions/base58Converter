@@ -2,12 +2,13 @@
 A simple converter to and from base58. 
 
 ## Usage
-The converter class has three properties:
+The converter class has four properties:
 * ByteArray
-* Number
+* BE_Number (big endian serialization)
+* LE_Number (little endian serialization)
 * Base58String
 
-To encode and decode simply set any of the properites and the conversion will be done.
+To encode and decode simply set any of the properites and the conversion will be done. Setting the ByteArray, BE_Number or LE_Number will encode the value into a base58 string and update the rest of the properties. Setting the Base58String will decode it and update all three properties. The byte array will always be in big endian order, most significant byte first. 
 
 E.g.
 ```c#
@@ -21,8 +22,9 @@ Console.WriteLine(Base58Converter.Base58String)
 Will be:
 >21111a
 
+
 ## Remarks
-* Changing a single byte in the array will not alter anything.
-* The Number property is a big endian BigInt, so, as base 58, 1112 and 2 will both evalute to 1 decimal. The byte array will keep the 0x0 bytes correctly.
+* Changing a single byte in the array will not alter anything, at the moment you need to change the entire array in order to trigger the setter. Will be fixed in the next version.
+
 
 
