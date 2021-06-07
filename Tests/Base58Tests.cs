@@ -20,6 +20,9 @@ namespace Tests
 			Assert.Throws<ArgumentException>(() => Base58Converter.Base58String = "abc0");
 			Assert.Throws<ArgumentException>(() => Base58Converter.Base58String = "stesteO");
 			Assert.Throws<ArgumentException>(() => Base58Converter.Base58String = "zzzIzzz");
+			Assert.DoesNotThrow(() => Base58Converter.Base58String = "abc");
+			Assert.DoesNotThrow(() => Base58Converter.Base58String = "123");
+			Assert.DoesNotThrow(() => Base58Converter.Base58String = "zzz123");
 		}
 
 		[TestCase (new byte[]{ 0 }, ExpectedResult = "1")]
